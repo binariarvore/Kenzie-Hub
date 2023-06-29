@@ -1,33 +1,42 @@
-import { Nav, NavContainer, Header, HeaderContainer, Section } from './styles';
-import { useNavigate } from 'react-router-dom';
+import {
+  Nav,
+  NavContainer,
+  Header,
+  HeaderContainer,
+  Section,
+  OpenModal,
+  Div,
+} from './styles';
+import { useUserContext } from '../../Providers/UserContext';
+import { useTechContext } from '../../Providers/TechContext';
+import CreateTechModal from './Techs/Create';
+import List from './Techs';
 
-const Dashboard = ({ user }) => {
-  const navigate = useNavigate();
+const Dashboard = () => {
+  const { user, userLogout } = useUserContext();
+  const { setModalCreate } = useTechContext();
 
-  const logout = () => {
-    localStorage.setItem('@Kenziehub:Token', '');
-    localStorage.setItem('@Kenziehub:UserID', '');
-    navigate('/');
-  };
   return (
     <>
       <Nav>
         <NavContainer>
           <h1>Kenzie Hub</h1>
-          <button onClick={() => logout()}>Sair</button>
+          <button onClick={() => userLogout()}>Sair</button>
         </NavContainer>
       </Nav>
       <Header>
         <HeaderContainer>
-          <h2>Olá, {user.name}</h2>
-          <p>{user.course_module}</p>
+          <h2>Olá, {user?.name}</h2>
+          <p>{user?.course_module}</p>
         </HeaderContainer>
       </Header>
       <Section>
-        <h2>Que pena! Estamos em desenvolvimento :(</h2>
-        <p>
-          Nossa aplicação está em desenvolvimento, em breve teremos novidades
-        </p>
+        <Div>
+          <p>Tecnologias</p>
+          <OpenModal onClick={() => setModalCreate(true)}>+</OpenModal>
+        </Div>
+        <List />
+        <CreateTechModal />
       </Section>
     </>
   );

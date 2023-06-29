@@ -42,6 +42,7 @@ export const HeaderContainer = styled(Container)`
   flex-direction: row;
   max-width: 1000px;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   h2 {
     color: var(--Grey-0);
@@ -75,5 +76,32 @@ export const Section = styled.section`
     font-size: 1rem;
     color: var(--Grey-0);
     font-family: var(--Font-Default);
+  }
+`;
+
+export const Div = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    font-weight: 600;
+  }
+`;
+
+export const OpenModal = styled.button`
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  background: var(--Grey-3);
+  color: var(--Grey-0);
+  font-family: var(--Font-Default);
+  font-weight: 500;
+  font-size: 20px;
+  transition: 0.3s;
+
+  :hover {
+    background: var(--Grey-2);
   }
 `;

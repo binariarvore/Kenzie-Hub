@@ -6,13 +6,15 @@ const schema = z
     email: z.string().nonempty('Campo obrigatório').email('E-mail inválido'),
     password: z
       .string()
-      .min(8, 'A senha precisa conter pelo menos 8 caracteres')
-      .regex(/(?=.*?[A-Z])/, 'É necessário ao menos uma letra maiúscula')
-      .regex(/(?=.*?[a-z])/, 'É necessário ao menos uma letra minúscula')
-      .regex(/(?=.*?[0-9])/, 'É necessário pelo menos um número')
+      .min(8, {
+        message: 'A senha é obrigatória e precisa de mínimo 8 caracteres',
+      })
+      .regex(/(?=.?[A-Z])/, 'É necessário ao menos uma letra maiúscula')
+      .regex(/(?=.?[a-z])/, 'É necessário ao menos uma letra minúscula')
+      .regex(/(?=.?[0-9])/, 'É necessário pelo menos um número')
       .regex(
-        /(?=.[}{,.^?~=+\-_\!@%/\-+.\|])/,
-        'É necessário pelo menos um caractére especial'
+        /(?=.[)!}{,.^?~=@+-_/*-+.|])/,
+        'É necessário pelo menos um caracter especial'
       ),
     confirm: z.string().nonempty('Campo obrigatório'),
     bio: z.string().nonempty('Campo obrigatório'),

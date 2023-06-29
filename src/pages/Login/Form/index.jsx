@@ -2,14 +2,11 @@ import { LoginButton, LoginForm } from './styles';
 import { Error } from '../../Register/Form/styles';
 import Input from '../../../Components/Input';
 import { useForm } from 'react-hook-form';
-import api from '../../../services/api';
 import schema from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useUserContext } from '../../../Providers/UserContext';
 
-const Form = ({ setUser }) => {
-  const navigate = useNavigate();
+const Form = () => {
   const {
     register,
     handleSubmit,
@@ -17,19 +14,7 @@ const Form = ({ setUser }) => {
   } = useForm({
     resolver: zodResolver(schema),
   });
-
-  const userLogin = async (formData) => {
-    try {
-      const { data } = await api.post('/sessions', formData);
-      setUser(() => data.user);
-      localStorage.setItem('@Kenziehub:Token', JSON.stringify(data.token));
-      localStorage.setItem('@Kenziehub:UserID', JSON.stringify(data.user.id));
-      navigate('/dashboard');
-    } catch (error) {
-      toast.error('Ops! Algo deu errado');
-      console.error(error);
-    }
-  };
+  const { userLogin } = useUserContext();
 
   return (
     <LoginForm onSubmit={handleSubmit(userLogin)}>

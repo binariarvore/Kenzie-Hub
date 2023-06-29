@@ -1,12 +1,10 @@
 import Input from '../../../Components/Input';
 import Select from '../../../Components/Select';
-import api from '../../../services/api';
 import { Button, Error, Form } from './styles';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import schema from './schema';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useUserContext } from '../../../Providers/UserContext';
 
 const RegisterForm = () => {
   const {
@@ -16,18 +14,7 @@ const RegisterForm = () => {
   } = useForm({
     resolver: zodResolver(schema),
   });
-
-  const navigate = useNavigate();
-
-  const userRegister = async (formData) => {
-    try {
-      await api.post('/users', formData);
-      toast.success('Conta criada com sucesso!');
-      navigate('/');
-    } catch (error) {
-      toast.error('Ops! Algo deu errado');
-    }
-  };
+  const { userRegister } = useUserContext();
 
   return (
     <Form onSubmit={handleSubmit(userRegister)}>
@@ -83,7 +70,18 @@ const RegisterForm = () => {
         label='Selecionar módulo'
         id='course_module'
         {...register('course_module')}
-      />
+      >
+        <option value='Primeiro módulo (Introdução ao Frontend)'>
+          Primeiro módulo
+        </option>
+        <option value='Segundo módulo (Frontend Avançado)'>
+          Segundo módulo
+        </option>
+        <option value='Terceiro módulo (Introdução ao Backend)'>
+          Terceiro módulo
+        </option>
+        <option value='Quarto módulo (Backend Avançado)'>Quarto módulo</option>
+      </Select>
       <Button type='submit'>Cadastrar</Button>
     </Form>
   );

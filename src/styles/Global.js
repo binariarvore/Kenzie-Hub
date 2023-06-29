@@ -24,7 +24,6 @@ const Global = createGlobalStyle`
     flex-direction: column;
     gap: 0.5rem;
     width: 100%;
-    border-radius: 3px;
     padding: 1rem;
     background-color: var(--Grey-3);
   }
